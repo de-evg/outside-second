@@ -1,10 +1,9 @@
 import { Reducer } from "redux";
 import { generateTree } from "../../../helpers/list";
-import { mock } from "../../../mock/mock";
 import { ActionType } from "../../actions";
 
 interface ITreeBranchElement {
-  id: number,
+  _id: number,
   title: string,
   main: boolean
 };
@@ -24,7 +23,7 @@ const initialState = {
 export const treeData: Reducer<ITreeState> = (state = initialState, action) => {
   switch (action.type) {
     case ActionType.GET_TREE:
-      const tree = generateTree(mock);
+      const tree = generateTree(action.payload);
       return {...state, tree};
     default: return state;
   };

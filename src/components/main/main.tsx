@@ -1,7 +1,7 @@
 import * as React from "react";
 import { connect } from "react-redux";
-import { AnyAction, Dispatch } from "redux";
-import { ActionCreator } from "../../store/actions";
+import { ThunkDispatch } from "redux-thunk";
+import { fetchData } from "../../store/api-actions";
 import List from "../list/list";
 
 interface IMain {
@@ -19,9 +19,9 @@ const Main: React.FC<IMain> = ({ loadData }) => {
 
   return <List />;
 };
-const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) => ({
+const mapDispatchToProps = (dispatch: ThunkDispatch<{}, {}, any>) => ({
   loadData() {
-    dispatch(ActionCreator.loadData())
+    dispatch(fetchData())
   }
 });
 
