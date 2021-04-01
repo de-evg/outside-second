@@ -6,6 +6,7 @@ import AddForm from "../add-form/add-form";
 import SortForm from "../sort-form/sort-form";
 import { fetchData } from "../../store/api-actions";
 import List from "../list/list";
+import SearchForm from "../search-form/search-form";
 
 
 const Wrapper = styled.div`
@@ -29,6 +30,7 @@ const Main: React.FC<IMain> = ({ loadData }) => {
   return (
     <Wrapper>
       <SortForm />
+      <SearchForm />
       <AddForm />
       <List />
     </Wrapper>

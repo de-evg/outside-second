@@ -1,8 +1,7 @@
 import * as React from "react";
-import { useDispatch } from "react-redux";
+import { RootStateOrAny, useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
-import Button from "../button/button";
-import { postData } from "../../store/api-actions";
+import { ActionCreator } from "../../store/actions";
 
 const Form = styled.form`
   display: flex;
@@ -16,30 +15,26 @@ const TextInput = styled.input`
 const InputLabel = styled.label``;
 
 const SearchForm: React.FC = () => {
-  interface IFormData {
-    title: string,
-    main: boolean
-  }
-  const [formData, setFormData] = React.useState<IFormData>({ title: "", main: true});
+
   const dispatch = useDispatch();
+  const filter: string = useSelector((state: RootStateOrAny) => state.TREE.filter);
+  const [row, setRow] = React.useState("");
 
   const handleInputChange = React.useCallback((evt) => {
-    let {value} = evt.target;
-    setFormData({...formData, [evt.target.id]: value });
-  }, [formData])
+    setRow(evt.target.value);
+  }, []);
 
-  const handleClick = React.useCallback((evt) => {
-    evt.preventDefault();
-    dispatch(postData(formData));
-    setFormData({...formData, title: "" });
-  }, [dispatch, formData]);
+
+
+  React.useEffect(() => {
+    dispatch(ActionCreator.updateFilter(row));
+  }, [row, dispatch]);
+
   return (
-      <Form >
-        <InputLabel htmlFor="title">Введите имя строки:</InputLabel>
-        <TextInput onChange={handleInputChange} value={formData.title} type="text" id="title" />        
-
-        <Button id={"Submit"} clickHandler={handleClick} text={"Добавить"}></Button>
-      </Form>
+    <Form >
+      <InputLabel htmlFor="title">Что ищем?</InputLabel>
+      <TextInput onChange={handleInputChange} value={filter} type="text" id="title" />
+    </Form>
   );
 };
 

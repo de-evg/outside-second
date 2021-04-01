@@ -36,7 +36,7 @@ const AddForm: React.FC = () => {
   }, [dispatch, formData]);
   return (
       <Form >
-        <InputLabel htmlFor="title">Введите имя строки:</InputLabel>
+        <InputLabel htmlFor="title">Введите имя новой строки:</InputLabel>
         <TextInput onChange={handleInputChange} value={formData.title} type="text" id="title" />        
 
         <Button id={"Submit"} clickHandler={handleClick} text={"Добавить"}></Button>

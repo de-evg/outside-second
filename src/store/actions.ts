@@ -6,7 +6,8 @@ const ActionType = {
   DELETE_ERROR: 'DELETE_ERROR',
   ADD_DATA: 'ADD_DATA',
   UPDATE_DATA: 'UPDATE_DATA',
-  CHANGE_SORT: 'CHANGE_SORT'
+  CHANGE_SORT: 'CHANGE_SORT',
+  CHANGE_FILTER: 'CHANGE_FILTER'
 };
 
 interface ILoadData {
@@ -33,9 +34,13 @@ const ActionCreator = {
     type: ActionType.UPDATE_DATA,
     payload: data
   }),
-  changeSort: (newSortType: {withRegister: boolean, sortType: string}) => ({
+  changeSort: (newSortType: { withRegister: boolean, sortType: string }) => ({
     type: ActionType.CHANGE_SORT,
     payload: newSortType
+  }),
+  updateFilter: (filter: string) => ({
+    type: ActionType.CHANGE_FILTER,
+    payload: filter
   })
 };
 

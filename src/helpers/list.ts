@@ -4,11 +4,15 @@ interface ITree {
   [name: string]: ITreeElement[]
 };
 
-const generateTree = (list: ITreeElement[], sortType: string, withRegister: boolean) => {
+const generateTree = (list: ITreeElement[], sortType: string, withRegister: boolean, filter: string) => {
   const tree = list.reduce((tree: ITree, item: ITreeElement) => {
-    const branchName = item.title.slice(0, 1).toUpperCase();
-    tree[branchName] = tree[branchName] || [];
-    tree[branchName].push(item);
+    const findedSubstr = withRegister ? item.title.includes(filter) : item.title.toLowerCase().includes(filter.toLowerCase());
+    if (!filter || findedSubstr) {
+      const branchName = item.title.slice(0, 1).toUpperCase();
+      tree[branchName] = tree[branchName] || [];
+      tree[branchName].push(item);
+    }
+
     return tree;
   }, {});
 

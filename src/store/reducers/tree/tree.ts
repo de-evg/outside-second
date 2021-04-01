@@ -12,7 +12,8 @@ export interface ITreeState {
   origin: ITreeElement[],
   isDeleteError: boolean,
   sortType: string,
-  withRegister: boolean
+  withRegister: boolean,
+  filter: string
 };
 
 const initialState = {
@@ -20,14 +21,16 @@ const initialState = {
   origin: [],
   isDeleteError: false,
   sortType: "AZ",
-  withRegister: false
+  withRegister: false,
+  filter: ""
 };
 
 export const treeData: Reducer<ITreeState> = (state = initialState, action) => {
+  const { origin, sortType, withRegister, filter } = state;
   let updatedOrigin;
   switch (action.type) {
     case ActionType.GET_TREE:
-      const tree = generateTree(action.payload, state.sortType, state.withRegister);
+      const tree = generateTree(action.payload, sortType, withRegister, filter);
       return { ...state, tree, origin: action.payload };
 
     case ActionType.DELETE:
@@ -45,16 +48,16 @@ export const treeData: Reducer<ITreeState> = (state = initialState, action) => {
         ];
       };
 
-      updatedOrigin = deleteFromOrigin(action.payload, state.origin);
-      const newTree = generateTree(updatedOrigin, state.sortType, state.withRegister);
+      updatedOrigin = deleteFromOrigin(action.payload, origin);
+      const newTree = generateTree(updatedOrigin, sortType, withRegister, filter);
       return { ...state, tree: newTree, origin: updatedOrigin, isDeleted: false };
 
     case ActionType.DELETE_ERROR:
       return { ...state, isDeleteError: true };
 
     case ActionType.ADD_DATA:
-      const newOrigin = [...state.origin, action.payload];
-      return { ...state, origin: newOrigin, tree: generateTree(newOrigin, state.sortType, state.withRegister) };
+      const newOrigin = [...origin, action.payload];
+      return { ...state, origin: newOrigin, tree: generateTree(newOrigin, sortType, withRegister, filter) };
 
     case ActionType.UPDATE_DATA:
       const updateOrigin = (update: ITreeElement, origin: ITreeElement[]) => {
@@ -71,11 +74,16 @@ export const treeData: Reducer<ITreeState> = (state = initialState, action) => {
           ...items!.slice(index + 1)
         ];
       };
-      updatedOrigin = updateOrigin(action.payload, state.origin);
-      const updatedTree = generateTree(updatedOrigin, state.sortType, state.withRegister);
+      updatedOrigin = updateOrigin(action.payload, origin);
+      const updatedTree = generateTree(updatedOrigin, sortType, withRegister, filter);
       return { ...state, origin: updatedOrigin, tree: updatedTree };
+
     case ActionType.CHANGE_SORT:
-      return { ...state, ...action.payload, tree: generateTree(state.origin, action.payload.sortType, action.payload.withRegister) }
+      return { ...state, ...action.payload, tree: generateTree(origin, action.payload.sortType, action.payload.withRegister, filter) };
+
+    case ActionType.CHANGE_FILTER:
+
+      return { ...state, filter: action.payload, tree: generateTree(origin, sortType, withRegister, action.payload) };
 
     default: return state;
   };
