@@ -8,7 +8,6 @@ const Form = styled.form`
   display: flex;
   flex-direction column;
   margin-bottom: 10px;
-  backgound-color: #AAAAAA;
 `;
 const TextInput = styled.input`
   margin-bottom: 10px;
@@ -16,7 +15,7 @@ const TextInput = styled.input`
 
 const InputLabel = styled.label``;
 
-const AddForm: React.FC = () => {
+const SearchForm: React.FC = () => {
   interface IFormData {
     title: string,
     main: boolean
@@ -44,4 +43,4 @@ const AddForm: React.FC = () => {
   );
 };
 
-export default AddForm;
+export default SearchForm;

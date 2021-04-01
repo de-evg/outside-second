@@ -11,3 +11,8 @@ export interface ITreeElement {
   title: string,
   main: boolean
 };
+
+export const SortType = {
+  AZ: "AZ",
+  ZA: "ZA"
+};

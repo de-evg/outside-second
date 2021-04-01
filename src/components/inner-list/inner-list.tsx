@@ -12,8 +12,6 @@ const ListComponent = styled.ul`
   max-width: 100%;
 `;
 
-
-
 interface IPropsInnerList {
   items: ITreeElement[]
 };

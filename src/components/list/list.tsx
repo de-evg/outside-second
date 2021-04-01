@@ -1,28 +1,30 @@
 import * as React from "react";
-import { connect } from "react-redux";
+import { connect, RootStateOrAny } from "react-redux";
 import styled from "styled-components";
 import { NameSpace } from "../../store/reducers/root";
 import ListItem from "../list-item/list-item";
-import { ITreeElement } from "../../const";
+import { ITreeElement, SortType } from "../../const";
 
 const ListComponent = styled.ul`
   margin: 0;
   padding: 0;
 `;
 
-
 interface IPropsList {
-  [tree: string]: {
-    [branchName: string]: ITreeElement[]
-  }
+  tree: {[branchName: string]: ITreeElement[]},
+  sortType: string
 };
 
-const List: React.FC<IPropsList> = ({ tree }) => {
+const List: React.FC<IPropsList> = ({ tree, sortType }) => {
   const [listKeys, setListKeys] = React.useState<string[] | []>([]);
 
   React.useEffect(() => {
-    setListKeys(Object.keys(tree).sort((titleA: string, titleB: string) => titleA.toUpperCase() > titleB.toUpperCase() ? 1 : -1));
-  }, [tree]);
+    if (sortType === SortType.AZ) {
+      setListKeys(Object.keys(tree).sort((titleA: string, titleB: string) => titleA.toLowerCase() > titleB.toLowerCase() ? 1 : -1));
+    } else {
+      setListKeys(Object.keys(tree).sort((titleA: string, titleB: string) => titleA.toLowerCase() < titleB.toLowerCase() ? 1 : -1));
+    }
+  }, [tree, sortType]);
 
   return (
     <ListComponent>
@@ -30,15 +32,10 @@ const List: React.FC<IPropsList> = ({ tree }) => {
     </ListComponent>
   );
 };
-
-interface ITreeState {
-  [tree: string]: {
-    [x: string]: IPropsList[]
-  }
-};
-
-const mapStateToProps = (state: ITreeState) => ({
-  tree: state[NameSpace.TREE].tree
+  
+const mapStateToProps = (state: RootStateOrAny) => ({
+  tree: state[NameSpace.TREE].tree,
+  sortType: state[NameSpace.TREE].sortType
 });
 
 export default connect(mapStateToProps)(List);

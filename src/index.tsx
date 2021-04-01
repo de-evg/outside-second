@@ -11,8 +11,7 @@ import thunk from 'redux-thunk';
 
 const api = createAPI(() => { });
 
-const store = createStore(root, composeWithDevTools(applyMiddleware(thunk.withExtraArgument(api)))
-);
+const store = createStore(root, composeWithDevTools(applyMiddleware(thunk.withExtraArgument(api))));
 
 ReactDOM.render(
   <Provider store={store}>

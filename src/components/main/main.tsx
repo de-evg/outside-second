@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { ThunkDispatch } from "redux-thunk";
 import styled from "styled-components";
 import AddForm from "../add-form/add-form";
+import SortForm from "../sort-form/sort-form";
 import { fetchData } from "../../store/api-actions";
 import List from "../list/list";
 
@@ -27,8 +28,9 @@ const Main: React.FC<IMain> = ({ loadData }) => {
 
   return (
     <Wrapper>
-      <List /> 
+      <SortForm />
       <AddForm />
+      <List />
     </Wrapper>
   );
 };

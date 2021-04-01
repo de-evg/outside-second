@@ -10,20 +10,24 @@ interface ITreeBranch {
 export interface ITreeState {
   tree: ITreeBranch | {},
   origin: ITreeElement[],
-  isDeleteError: boolean
+  isDeleteError: boolean,
+  sortType: string,
+  withRegister: boolean
 };
 
 const initialState = {
   tree: {},
   origin: [],
-  isDeleteError: false
+  isDeleteError: false,
+  sortType: "AZ",
+  withRegister: false
 };
 
 export const treeData: Reducer<ITreeState> = (state = initialState, action) => {
   let updatedOrigin;
   switch (action.type) {
     case ActionType.GET_TREE:
-      const tree = generateTree(action.payload);
+      const tree = generateTree(action.payload, state.sortType, state.withRegister);
       return { ...state, tree, origin: action.payload };
 
     case ActionType.DELETE:
@@ -40,9 +44,9 @@ export const treeData: Reducer<ITreeState> = (state = initialState, action) => {
           ...items!.slice(index + 1)
         ];
       };
-      
+
       updatedOrigin = deleteFromOrigin(action.payload, state.origin);
-      const newTree = generateTree(updatedOrigin);
+      const newTree = generateTree(updatedOrigin, state.sortType, state.withRegister);
       return { ...state, tree: newTree, origin: updatedOrigin, isDeleted: false };
 
     case ActionType.DELETE_ERROR:
@@ -50,7 +54,7 @@ export const treeData: Reducer<ITreeState> = (state = initialState, action) => {
 
     case ActionType.ADD_DATA:
       const newOrigin = [...state.origin, action.payload];
-      return { ...state, origin: newOrigin, tree: generateTree(newOrigin) };
+      return { ...state, origin: newOrigin, tree: generateTree(newOrigin, state.sortType, state.withRegister) };
 
     case ActionType.UPDATE_DATA:
       const updateOrigin = (update: ITreeElement, origin: ITreeElement[]) => {
@@ -68,8 +72,10 @@ export const treeData: Reducer<ITreeState> = (state = initialState, action) => {
         ];
       };
       updatedOrigin = updateOrigin(action.payload, state.origin);
-      const updatedTree = generateTree(updatedOrigin);
+      const updatedTree = generateTree(updatedOrigin, state.sortType, state.withRegister);
       return { ...state, origin: updatedOrigin, tree: updatedTree };
+    case ActionType.CHANGE_SORT:
+      return { ...state, ...action.payload, tree: generateTree(state.origin, action.payload.sortType, action.payload.withRegister) }
 
     default: return state;
   };
