@@ -3,18 +3,16 @@ import { connect } from "react-redux";
 import styled from "styled-components";
 import { NameSpace } from "../../store/reducers/root";
 import InnerListItem from "../inner-list-item/inner-list-item";
+import { ITreeElement } from "../../const";
 
 const ListComponent = styled.ul`
   margin: 0;
   padding: 0;
   padding-left: 30px;
+  max-width: 100%;
 `;
 
-interface ITreeElement {
-  id: number,
-  title: string,
-  main: boolean
-}
+
 
 interface IPropsInnerList {
   items: ITreeElement[]
@@ -24,7 +22,7 @@ const InnerList: React.FC<IPropsInnerList> = ({ items }) => {
 
   return (
     <ListComponent>
-      {items.map((item: ITreeElement, i:number) => <InnerListItem item={item} key={`${i}-${item.id}`} />)}
+      {items.map((item: ITreeElement, i: number) => <InnerListItem item={item} key={`${i}-${item._id}`} />)}
     </ListComponent>
   );
 };

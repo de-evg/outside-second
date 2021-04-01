@@ -1,73 +1,37 @@
-const Method = {
-  GET: `GET`,
-  DELTE: `DELETE`
+import axios from "axios";
+
+const BACKEND_URL = `https://recruting-test-api.herokuapp.com/api/v1/`;
+const REQUST_TIMEOUT = 5000;
+
+const HttpCode = {
+  UNAUTHORIZED: 401,
+  BAD_REQUEST: 400,
+  INTERNAL_SERVER: 500
 };
 
-const SuccessHTTPStatusRange = {
-  MIN: 200,
-  MAX: 299
-};
+const createAPI = (onBadRequest: () => void) => {
+  const api = axios.create({
+    baseURL: BACKEND_URL,
+    timeout: REQUST_TIMEOUT,
+    withCredentials: false
+  });
 
-interface ILoad {
-  url: string,
-  method?: string,
-  body?: null,
-  headers?: HeadersInit,
-  mode?: RequestMode
-};
+  const onSuccess = (response: any) => response;
 
-class Api {
-  private _endPoint: string;
+  const onFail = (err: { response: any; }) => {
+    const {response} = err;
 
-  constructor(endPoint: string) {
-    this._endPoint = endPoint;
-  }
-
-  getData(url: string) {
-    return this._load({url})
-      .then(Api.toJSON)
-      .catch((err) => {
-        throw console.log(err);
-      });
-  }
-
-  _load({
-    url,
-    method = Method.GET,
-    body = null,
-    headers = new Headers({"Accept": "application/json"}),
-    mode = "cors"
-  }: ILoad) {
-    return fetch(`${this._endPoint}${url}`, {
-      method,
-      body,
-      headers,
-      mode
-    })
-      .then(Api.checkStatus)
-      .catch((err) => {
-        throw new Error();
-      });
-  }
-
-  static checkStatus(response: { status: number; statusText: any; }) {
-    if (
-      response.status < SuccessHTTPStatusRange.MIN &&
-      response.status > SuccessHTTPStatusRange.MAX
-    ) {
-      throw new Error(`${response.status}: ${response.statusText}`);
+    if (response.status === HttpCode.BAD_REQUEST) {
+      onBadRequest();
+      throw err;
     }
 
-    return response;
-  }
-
-  static toJSON(response: any) {
-    return response.json();
-  }
-
-  static catchError(err: any) {
     throw err;
-  }
-}
+  };
 
-export default Api;
+  api.interceptors.response.use(onSuccess, onFail);
+
+  return api;
+};
+
+export {createAPI};
