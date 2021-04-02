@@ -1,22 +1,22 @@
 import * as React from "react";
 import { RootStateOrAny, useDispatch, useSelector } from "react-redux";
-import styled from "styled-components";
+import styledComponents from "styled-components";
 import { ActionCreator } from "../../store/actions";
 
-const Form = styled.form`
+const Form = styledComponents.form`
   display: flex;
   flex-direction column;
   margin-bottom: 10px;
 `;
-const TextInput = styled.input`
+const TextInput = styledComponents.input`
 `;
-const InputLabel = styled.label``;
-const Container = styled.div`
+const InputLabel = styledComponents.label``;
+const Container = styledComponents.div`
   display: flex;
   width: 50%;
   margin-bottom: 10px;
 `;
-const Wrapper = styled.div`
+const Wrapper = styledComponents.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;

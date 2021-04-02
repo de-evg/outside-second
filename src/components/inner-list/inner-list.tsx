@@ -1,9 +1,9 @@
 import * as React from "react";
-import styled from "styled-components";
+import styledComponents from "styled-components";
 import InnerListItem from "../inner-list-item/inner-list-item";
 import { ITreeElement } from "../../const";
 
-const ListComponent = styled.ul`
+const ListComponent = styledComponents.ul`
   margin: 0;
   padding: 0;
   padding-left: 30px;

@@ -1,11 +1,11 @@
 import * as React from "react";
 import { connect, RootStateOrAny } from "react-redux";
-import styled from "styled-components";
+import styledComponents from "styled-components";
 import { NameSpace } from "../../store/reducers/root";
 import ListItem from "../list-item/list-item";
 import { ITreeElement, SortType } from "../../const";
 
-const ListComponent = styled.ul`
+const ListComponent = styledComponents.ul`
   margin: 0;
   padding: 0;
 `;

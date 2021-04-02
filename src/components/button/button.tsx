@@ -1,10 +1,10 @@
 import * as React from "react";
-import styled from "styled-components";
+import styledComponents from "styled-components";
 
-const Btn = styled.button``;
+const Btn = styledComponents.button``;
 
 //Реагирует на ошибку запроса
-const BtnError = styled(Btn)`
+const BtnError = styledComponents(Btn)`
 
   animation: error 0.6s ease-in;
 

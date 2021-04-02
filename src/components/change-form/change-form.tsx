@@ -1,19 +1,19 @@
 import * as React from "react";
 import { RootStateOrAny, useSelector, useDispatch } from "react-redux";
-import styled from "styled-components";
+import styledComponents from "styled-components";
 import Button from "../button/button";
 import { updateData } from "../../store/api-actions";
 import { ITreeElement } from "../../const";
 import { ActionCreator } from "../../store/actions";
 
-const Form = styled.form`
+const Form = styledComponents.form`
   display: flex;
   flex-direction column;
 `;
-const TextInput = styled.input`
+const TextInput = styledComponents.input`
 `;
-const InputLabel = styled.label``;
-const SelectInput = styled.select``;
+const InputLabel = styledComponents.label``;
+const SelectInput = styledComponents.select``;
 
 interface IChangeForma {
   treeItem: ITreeElement,

@@ -1,13 +1,13 @@
 import * as React from "react";
 import { RootStateOrAny, useDispatch, useSelector } from "react-redux";
-import styled from "styled-components";
+import styledComponents from "styled-components";
 import { ITreeElement } from "../../const";
 import Button from "../button/button";
 import ChangeForm from "../change-form/change-form";
 import { ActionCreator } from "../../store/actions";
 import { deleteData } from "../../store/api-actions";
 
-const ListItemComponent = styled.li`
+const ListItemComponent = styledComponents.li`
   margin: 0;
   padding: 0;
   padding: 5px 10px;
@@ -17,7 +17,7 @@ const ListItemComponent = styled.li`
   justify-content: space-between;
 `;
 
-const Wrapper = styled.div`
+const Wrapper = styledComponents.div`
   align-self: flex-end;
   display: flex;
   justify-content: space-between;

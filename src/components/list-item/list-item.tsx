@@ -1,17 +1,17 @@
 import * as React from "react";
-import styled from "styled-components";
+import styledComponents from "styled-components";
 import InnerList from "../inner-list/inner-list";
 import { ITreeElement } from "../../const";
 
 const MAX_SHOWED_ROWS = 5;
 
-const ListItemComponent = styled.li`
+const ListItemComponent = styledComponents.li`
   margin: 0;
   padding: 0;
   list-style: none;
 `;
 
-const BranchHead = styled.button`
+const BranchHead = styledComponents.button`
   padding: 5px;
   width: 100%;
   text-align: left;

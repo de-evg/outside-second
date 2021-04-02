@@ -1,18 +1,18 @@
 import * as React from "react";
 import { RootStateOrAny, useDispatch, useSelector } from "react-redux";
-import styled from "styled-components";
+import styledComponents from "styled-components";
 import { ActionCreator } from "../../store/actions";
 
-const Form = styled.form`
+const Form = styledComponents.form`
   display: flex;
   flex-direction column;
   margin-bottom: 10px;
 `;
-const TextInput = styled.input`
+const TextInput = styledComponents.input`
   margin-bottom: 10px;
 `;
 
-const InputLabel = styled.label``;
+const InputLabel = styledComponents.label``;
 
 // Поиск данных содержащих текст введенной строки в title 
 const SearchForm: React.FC = () => {

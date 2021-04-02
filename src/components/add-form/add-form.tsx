@@ -1,24 +1,24 @@
 import * as React from "react";
 import { RootStateOrAny, useSelector, useDispatch } from "react-redux";
-import styled from "styled-components";
+import styledComponents from "styled-components";
 import Button from "../button/button";
 import { postData } from "../../store/api-actions";
 import { ActionCreator } from "../../store/actions";
 
-const Form = styled.form`
+const Form = styledComponents.form`
   display: flex;
   flex-direction column;
   margin-bottom: 10px;
   backgound-color: #AAAAAA;
 `;
-const TextInput = styled.input`
+const TextInput = styledComponents.input`
   margin-bottom: 10px;
 `;
 
-const Wrapper = styled.div`
+const Wrapper = styledComponents.div`
   width: 50px;`;
 
-const InputLabel = styled.label``;
+const InputLabel = styledComponents.label``;
 
 //Форма добавления нового элемента
 const AddForm: React.FC = () => {

@@ -1,19 +1,19 @@
 import * as React from "react";
 import { RootStateOrAny, useSelector, useDispatch } from "react-redux";
-import styled from "styled-components";
+import styledComponents from "styled-components";
 import AddForm from "../add-form/add-form";
 import SortForm from "../sort-form/sort-form";
 import List from "../list/list";
 import SearchForm from "../search-form/search-form";
 import { fetchData } from "../../store/api-actions";
 
-const Wrapper = styled.div`
+const Wrapper = styledComponents.div`
   margin 0 auto;
   padding: 10px 0;
   width: 500px;
 `;
 
-const ErrorMessage = styled.p`
+const ErrorMessage = styledComponents.p`
 text-align: center;
 `;
 
