@@ -10,7 +10,10 @@ interface ITreeBranch {
 export interface ITreeState {
   tree: ITreeBranch | {},
   origin: ITreeElement[],
-  isDeleteError: boolean,
+  deleteError: {id: string, error: boolean},
+  postError: {id: string, error: boolean},
+  loadError: {id: string, error: boolean},
+  updateError: {id: string, error: boolean},
   sortType: string,
   withRegister: boolean,
   filter: string
@@ -19,10 +22,14 @@ export interface ITreeState {
 const initialState = {
   tree: {},
   origin: [],
-  isDeleteError: false,
+  fetchError: false,
   sortType: "AZ",
   withRegister: false,
-  filter: ""
+  filter: "",
+  deleteError: {id: "", error: false},
+  postError: {id: "", error: false},
+  loadError: {id: "", error: false},
+  updateError: {id: "", error: false},
 };
 
 export const treeData: Reducer<ITreeState> = (state = initialState, action) => {
@@ -31,7 +38,7 @@ export const treeData: Reducer<ITreeState> = (state = initialState, action) => {
   switch (action.type) {
     case ActionType.GET_TREE:
       const tree = generateTree(action.payload, sortType, withRegister, filter);
-      return { ...state, tree, origin: action.payload };
+      return { ...state, tree, origin: action.payload, loadError: {id: "", error: false} };
 
     case ActionType.DELETE:
       const deleteFromOrigin = (update: string, origin: ITreeElement[]) => {
@@ -50,14 +57,15 @@ export const treeData: Reducer<ITreeState> = (state = initialState, action) => {
 
       updatedOrigin = deleteFromOrigin(action.payload, origin);
       const newTree = generateTree(updatedOrigin, sortType, withRegister, filter);
-      return { ...state, tree: newTree, origin: updatedOrigin, isDeleted: false };
+      return { ...state, tree: newTree, origin: updatedOrigin, deleteError: {id: "", error: false} };
 
-    case ActionType.DELETE_ERROR:
-      return { ...state, isDeleteError: true };
+    case ActionType.FETCH_ERROR:
+      return { ...state, ...action.payload };
 
     case ActionType.ADD_DATA:
       const newOrigin = [...origin, action.payload];
-      return { ...state, origin: newOrigin, tree: generateTree(newOrigin, sortType, withRegister, filter) };
+      return { ...state, origin: newOrigin, 
+        tree: generateTree(newOrigin, sortType, withRegister, filter), postError: {id: "", error: false} };
 
     case ActionType.UPDATE_DATA:
       const updateOrigin = (update: ITreeElement, origin: ITreeElement[]) => {
@@ -76,14 +84,16 @@ export const treeData: Reducer<ITreeState> = (state = initialState, action) => {
       };
       updatedOrigin = updateOrigin(action.payload, origin);
       const updatedTree = generateTree(updatedOrigin, sortType, withRegister, filter);
-      return { ...state, origin: updatedOrigin, tree: updatedTree };
+      return { ...state, origin: updatedOrigin, tree: updatedTree, updateError: {id: "", error: false} };
 
     case ActionType.CHANGE_SORT:
-      return { ...state, ...action.payload, tree: generateTree(origin, action.payload.sortType, action.payload.withRegister, filter) };
+      return { ...state, ...action.payload, 
+        tree: generateTree(origin, action.payload.sortType, action.payload.withRegister, filter) };
 
     case ActionType.CHANGE_FILTER:
 
-      return { ...state, filter: action.payload, tree: generateTree(origin, sortType, withRegister, action.payload) };
+      return { ...state, filter: action.payload, 
+        tree: generateTree(origin, sortType, withRegister, action.payload) };
 
     default: return state;
   };

@@ -1,8 +1,9 @@
 import * as React from "react";
-import { useDispatch } from "react-redux";
+import { RootStateOrAny, useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
 import Button from "../button/button";
 import { postData } from "../../store/api-actions";
+import { ActionCreator } from "../../store/actions";
 
 const Form = styled.form`
   display: flex;
@@ -21,26 +22,32 @@ const AddForm: React.FC = () => {
     title: string,
     main: boolean
   }
-  const [formData, setFormData] = React.useState<IFormData>({ title: "", main: true});
+  const [formData, setFormData] = React.useState<IFormData>({ title: "", main: true });
   const dispatch = useDispatch();
+  const postError: {id: string, error: boolean} = useSelector((state: RootStateOrAny) => state.TREE.postError);
 
   const handleInputChange = React.useCallback((evt) => {
-    let {value} = evt.target;
-    setFormData({...formData, [evt.target.id]: value });
+    let { value } = evt.target;
+    setFormData({ ...formData, [evt.target.id]: value });
   }, [formData])
 
   const handleClick = React.useCallback((evt) => {
     evt.preventDefault();
     dispatch(postData(formData));
-    setFormData({...formData, title: "" });
-  }, [dispatch, formData]);
-  return (
-      <Form >
-        <InputLabel htmlFor="title">Введите имя новой строки:</InputLabel>
-        <TextInput onChange={handleInputChange} value={formData.title} type="text" id="title" />        
+    if (!postError) {
+      dispatch(ActionCreator.fetchError({ postError: {id: "", error: false} }));
+    }
+    setFormData({ ...formData, title: "" });
 
-        <Button id={"Submit"} clickHandler={handleClick} text={"Добавить"}></Button>
-      </Form>
+  }, [dispatch, formData, postError]);
+
+  return (
+    <Form >
+      <InputLabel htmlFor="title">Введите имя новой строки:</InputLabel>
+      <TextInput onChange={handleInputChange} value={formData.title} type="text" id="title" />
+
+      <Button id={"Submit"} clickHandler={handleClick} isError={postError.error} text={"Добавить"} isDisabled={!formData.title}></Button>
+    </Form>
   );
 };
 

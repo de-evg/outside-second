@@ -1,6 +1,6 @@
 import * as React from "react";
 import { connect } from "react-redux";
-import { ThunkDispatch } from "redux-thunk";
+import { RootStateOrAny, useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
 import AddForm from "../add-form/add-form";
 import SortForm from "../sort-form/sort-form";
@@ -14,32 +14,38 @@ const Wrapper = styled.div`
   padding: 10px 0;
   width: 500px;
 `;
-interface IMain {
-  loadData: () => void
-};
 
-const Main: React.FC<IMain> = ({ loadData }) => {
-  const [isDataLoaded] = React.useState(false);
+const ErrorMessage = styled.p`
+text-align: center;
+`;
+
+const Main: React.FC = () => {
+  const dispatch = useDispatch();
+  const loadError: { id: string, error: boolean } = useSelector((state: RootStateOrAny) => state.TREE.loadError);
+  const [isDataLoaded, setIsDataLoaded] = React.useState(false);
 
   React.useEffect(() => {
     if (!isDataLoaded) {
-      loadData();
+      dispatch(fetchData())
+      setIsDataLoaded(true);
     }
-  }, [isDataLoaded, loadData]);
+  }, [dispatch, isDataLoaded]);
 
   return (
     <Wrapper>
-      <SortForm />
-      <SearchForm />
-      <AddForm />
-      <List />
+      {
+        loadError.error
+          ? <ErrorMessage>Не удалось загрузить данные</ErrorMessage>
+          : <>
+            <SortForm />
+            <SearchForm />
+            <AddForm />
+            <List />
+          </>
+      }
+
     </Wrapper>
   );
 };
-const mapDispatchToProps = (dispatch: ThunkDispatch<{}, {}, any>) => ({
-  loadData() {
-    dispatch(fetchData())
-  }
-});
 
-export default connect(null, mapDispatchToProps)(Main);
+export default Main;

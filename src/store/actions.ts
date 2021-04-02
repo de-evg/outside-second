@@ -3,14 +3,14 @@ import { ITreeElement } from "../const";
 const ActionType = {
   GET_TREE: 'GET_TREE',
   DELETE: 'DELETE',
-  DELETE_ERROR: 'DELETE_ERROR',
+  FETCH_ERROR: 'FETCH_ERROR',
   ADD_DATA: 'ADD_DATA',
   UPDATE_DATA: 'UPDATE_DATA',
   CHANGE_SORT: 'CHANGE_SORT',
   CHANGE_FILTER: 'CHANGE_FILTER'
 };
 
-interface ILoadData {
+export interface ILoadData {
   data: ITreeElement[]
 }
 
@@ -22,9 +22,6 @@ const ActionCreator = {
   deleteData: (id: string) => ({
     type: ActionType.DELETE,
     payload: id
-  }),
-  deleteError: () => ({
-    type: ActionType.DELETE_ERROR,
   }),
   addData: (data: ITreeElement) => ({
     type: ActionType.ADD_DATA,
@@ -41,6 +38,10 @@ const ActionCreator = {
   updateFilter: (filter: string) => ({
     type: ActionType.CHANGE_FILTER,
     payload: filter
+  }),
+  fetchError: (error: {[error: string]: {id: string, error: boolean}}) => ({
+    type: ActionType.FETCH_ERROR,
+    payload: error
   })
 };
 

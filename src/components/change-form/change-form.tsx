@@ -1,9 +1,10 @@
 import * as React from "react";
-import { useDispatch } from "react-redux";
+import { RootStateOrAny, useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
 import Button from "../button/button";
 import { updateData } from "../../store/api-actions";
 import { ITreeElement } from "../../const";
+import { ActionCreator } from "../../store/actions";
 
 const Form = styled.form`
   display: flex;
@@ -27,6 +28,7 @@ const ChangeForm: React.FC<IChangeForma> = ({ treeItem, changeBtnClickHandler }:
   const { title, main } = treeItem;
   const [formData, setFormData] = React.useState<IFormData>({ title, main });
   const dispatch = useDispatch();
+  const updateError: {id: string, error: boolean} = useSelector((state: RootStateOrAny) => state.TREE.updateError);
 
   const handleInputChange = React.useCallback((evt) => {
     let { value } = evt.target;
@@ -39,8 +41,12 @@ const ChangeForm: React.FC<IChangeForma> = ({ treeItem, changeBtnClickHandler }:
   const handleClick = React.useCallback((evt) => {
     evt.preventDefault();
     dispatch(updateData(treeItem._id, formData));
+    if (updateError) {
+      dispatch(ActionCreator.fetchError({ updateError: {id: "", error: false} }));
+      return;
+    }
     changeBtnClickHandler();
-  }, [dispatch, formData, treeItem, changeBtnClickHandler]);
+  }, [dispatch, formData, treeItem, changeBtnClickHandler, updateError]);
 
   return (
     <Form>
@@ -53,7 +59,8 @@ const ChangeForm: React.FC<IChangeForma> = ({ treeItem, changeBtnClickHandler }:
         <option value={"TRUE"}>True</option>
         <option value={"FALSE"}>False</option>
       </SelectInput>
-      <Button id={"Submit"} clickHandler={handleClick} text={"Изменить"}></Button>
+
+      <Button id={"Submit"} clickHandler={handleClick} isError={updateError.error && updateError.id === treeItem._id} text={"Изменить"}></Button>
     </Form>
   );
 };
