@@ -1,11 +1,11 @@
 import * as React from "react";
 import { RootStateOrAny, useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
-import { deleteData } from "../../store/api-actions";
-import Button from "../button/button";
 import { ITreeElement } from "../../const";
+import Button from "../button/button";
 import ChangeForm from "../change-form/change-form";
 import { ActionCreator } from "../../store/actions";
+import { deleteData } from "../../store/api-actions";
 
 const ListItemComponent = styled.li`
   margin: 0;
@@ -20,7 +20,6 @@ const ListItemComponent = styled.li`
 const Wrapper = styled.div`
   align-self: flex-end;
 `;
-
 
 interface IPropsListItem {
   item: ITreeElement
@@ -50,7 +49,7 @@ const InnerListItem: React.FC<IPropsListItem> = ({ item }) => {
         ? <ChangeForm treeItem={item} changeBtnClickHandler={handleChangeBtnClick} />
         : <Wrapper>
         <Button id={`${item._id}`} clickHandler={handleDeleteBtnClick} isError={deleteError.error && deleteError.id === item._id} text={'Удалить'} />
-        <Button dataName={item.title} id={`${item._id}`} clickHandler={handleChangeBtnClick} text={'Изменить'} />
+        <Button id={`${item._id}`} clickHandler={handleChangeBtnClick} text={'Изменить'} />
       </Wrapper>
       }
       

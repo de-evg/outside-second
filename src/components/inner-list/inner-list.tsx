@@ -1,7 +1,5 @@
 import * as React from "react";
-import { connect } from "react-redux";
 import styled from "styled-components";
-import { NameSpace } from "../../store/reducers/root";
 import InnerListItem from "../inner-list-item/inner-list-item";
 import { ITreeElement } from "../../const";
 
@@ -25,14 +23,4 @@ const InnerList: React.FC<IPropsInnerList> = ({ items }) => {
   );
 };
 
-interface ITreeState {
-  [tree: string]: {
-    [x: string]: IPropsInnerList[]
-  }
-}
-
-const mapStateToProps = (state: ITreeState) => ({
-  tree: state[NameSpace.TREE].tree
-});
-
-export default connect(mapStateToProps)(InnerList);
+export default InnerList;

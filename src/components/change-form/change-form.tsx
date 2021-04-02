@@ -41,7 +41,7 @@ const ChangeForm: React.FC<IChangeForma> = ({ treeItem, changeBtnClickHandler }:
   const handleClick = React.useCallback((evt) => {
     evt.preventDefault();
     dispatch(updateData(treeItem._id, formData));
-    if (updateError) {
+    if (updateError.error) {
       dispatch(ActionCreator.fetchError({ updateError: {id: "", error: false} }));
       return;
     }

@@ -1,7 +1,5 @@
 import * as React from "react";
-import { RootStateOrAny, useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
-import { ActionCreator } from "../../store/actions";
 
 const Btn = styled.button``;
 const BtnError = styled(Btn)`
@@ -26,21 +24,17 @@ const BtnError = styled(Btn)`
 
 interface IPropsButton {
   id?: string,
-  clickHandler: (evt: React.MouseEvent<HTMLButtonElement>) => void,
+  clickHandler: (evt?: React.MouseEvent<HTMLButtonElement>) => void,
   text: string,
-  dataName?: string,
   isDisabled?: boolean,
   isError?: boolean;
 };
 
-
-
-const Button: React.FC<IPropsButton> = ({ id, text, clickHandler, dataName, isDisabled, isError }) => {
-
+const Button: React.FC<IPropsButton> = ({ id, text, clickHandler, isDisabled, isError }) => {
   return (
     isError
-      ? <BtnError id={id} data-name={dataName} onClick={clickHandler} disabled={isDisabled}>{text}</BtnError>
-      : <Btn id={id} data-name={dataName} onClick={clickHandler} disabled={isDisabled}>{text}</Btn>
+      ? <BtnError id={id}  onClick={clickHandler} disabled={isDisabled}>{text}</BtnError>
+      : <Btn id={id}  onClick={clickHandler} disabled={isDisabled}>{text}</Btn>
   );
 };
 

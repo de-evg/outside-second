@@ -1,13 +1,11 @@
 import * as React from "react";
-import { connect } from "react-redux";
 import { RootStateOrAny, useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
 import AddForm from "../add-form/add-form";
 import SortForm from "../sort-form/sort-form";
-import { fetchData } from "../../store/api-actions";
 import List from "../list/list";
 import SearchForm from "../search-form/search-form";
-
+import { fetchData } from "../../store/api-actions";
 
 const Wrapper = styled.div`
   margin 0 auto;
