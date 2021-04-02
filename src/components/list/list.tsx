@@ -15,6 +15,7 @@ interface IPropsList {
   sortType: string
 };
 
+// Список веток tree view
 const List: React.FC<IPropsList> = ({ tree, sortType }) => {
   const [listKeys, setListKeys] = React.useState<string[] | []>([]);
 

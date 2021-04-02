@@ -14,6 +14,7 @@ const TextInput = styled.input`
 
 const InputLabel = styled.label``;
 
+// Поиск данных содержащих текст введенной строки в title 
 const SearchForm: React.FC = () => {
 
   const dispatch = useDispatch();
@@ -23,8 +24,6 @@ const SearchForm: React.FC = () => {
   const handleInputChange = React.useCallback((evt) => {
     setRow(evt.target.value);
   }, []);
-
-
 
   React.useEffect(() => {
     dispatch(ActionCreator.updateFilter(row));

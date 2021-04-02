@@ -19,12 +19,16 @@ const ListItemComponent = styled.li`
 
 const Wrapper = styled.div`
   align-self: flex-end;
+  display: flex;
+  justify-content: space-between;
+  width: 170px;
 `;
 
 interface IPropsListItem {
   item: ITreeElement
 };
 
+// Элемент из списка элементов ветки tree view
 const InnerListItem: React.FC<IPropsListItem> = ({ item }) => {
   const { title, main } = item;
   const dispatch = useDispatch();

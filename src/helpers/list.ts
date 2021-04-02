@@ -4,6 +4,7 @@ interface ITree {
   [name: string]: ITreeElement[]
 };
 
+// Генерирует и сортирует tree view
 const generateTree = (list: ITreeElement[], sortType: string, withRegister: boolean, filter: string) => {
   const tree = list.reduce((tree: ITree, item: ITreeElement) => {
     const findedSubstr = withRegister ? item.title.includes(filter) : item.title.toLowerCase().includes(filter.toLowerCase());

@@ -38,10 +38,12 @@ export const treeData: Reducer<ITreeState> = (state = initialState, action) => {
   let newTree;
   
   switch (action.type) {
+    // Получение данных от сервера и генерация tree view
     case ActionType.GET_TREE:
       const tree = generateTree(action.payload, sortType, withRegister, filter);
       return { ...state, tree, origin: action.payload, loadError: {id: "", error: false} };
 
+    // Удаление данных из оригинального массива и tree view
     case ActionType.DELETE:
       const index = state.origin.findIndex((item) => item._id === action.payload);
       const findedItem = state.origin[index];
@@ -75,9 +77,11 @@ export const treeData: Reducer<ITreeState> = (state = initialState, action) => {
       newTree = deleteFromTree(action.payload, state.tree);
       return { ...state, tree: newTree, origin: updatedOrigin, deleteError: {id: "", error: false} };
 
+    //  Ошибка запроса 
     case ActionType.FETCH_ERROR:
       return { ...state, ...action.payload };
 
+    // Добавление нового элемента
     case ActionType.ADD_DATA:
       const newOrigin = [...origin, action.payload];
       const addToTree = (update: ITreeElement, tree: ITreeBranch) => {
@@ -93,6 +97,7 @@ export const treeData: Reducer<ITreeState> = (state = initialState, action) => {
       newTree = addToTree(action.payload, state.tree);
       return { ...state, origin: newOrigin, tree: newTree, postError: {id: "", error: false} };
 
+    // Обновление элмента
     case ActionType.UPDATE_DATA:
       const updateOrigin = (update: ITreeElement, origin: ITreeElement[]) => {
         let items = [...origin];
@@ -123,10 +128,12 @@ export const treeData: Reducer<ITreeState> = (state = initialState, action) => {
       const updatedTree = updateInTree(action.payload, state.tree);
       return { ...state, origin: updatedOrigin, tree: updatedTree, updateError: {id: "", error: false} };
 
+    // Изменение сортировки  
     case ActionType.CHANGE_SORT:
       return { ...state, ...action.payload, 
         tree: generateTree(origin, action.payload.sortType, action.payload.withRegister, filter) };
-
+    
+    // Изменение фильтра поиска
     case ActionType.CHANGE_FILTER:
       return { ...state, filter: action.payload, 
         tree: generateTree(origin, sortType, withRegister, action.payload) };

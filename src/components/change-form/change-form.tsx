@@ -20,6 +20,7 @@ interface IChangeForma {
   changeBtnClickHandler: () => void
 };
 
+//Форма изменения элемента (title или main)
 const ChangeForm: React.FC<IChangeForma> = ({ treeItem, changeBtnClickHandler }: IChangeForma) => {
   interface IFormData {
     title: string,

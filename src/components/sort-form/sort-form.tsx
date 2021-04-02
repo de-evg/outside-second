@@ -24,6 +24,7 @@ const Wrapper = styled.div`
   margin-bottom: 10px;
 `;
 
+// Сортировка данных AZ или ZA с учетом регистра и без
 const SortForm: React.FC = () => {
   const dispatch = useDispatch();
   const sortType: string = useSelector((state: RootStateOrAny) => state.TREE.sortType);

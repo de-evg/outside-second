@@ -14,8 +14,8 @@ interface IPropsInnerList {
   items: ITreeElement[]
 };
 
+// Список элементов внутри ветки tree view
 const InnerList: React.FC<IPropsInnerList> = ({ items }) => {
-
   return (
     <ListComponent>
       {items.map((item: ITreeElement, i: number) => <InnerListItem item={item} key={`${i}-${item._id}`} />)}

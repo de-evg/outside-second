@@ -9,7 +9,7 @@ const HttpCode = {
   INTERNAL_SERVER: 500
 };
 
-const createAPI = (onBadRequest: () => void) => {
+const createAPI = () => {
   const api = axios.create({
     baseURL: BACKEND_URL,
     timeout: REQUST_TIMEOUT,
@@ -21,8 +21,7 @@ const createAPI = (onBadRequest: () => void) => {
   const onFail = (err: { response: any; }) => {
     const {response} = err;
 
-    if (response.status === HttpCode.BAD_REQUEST) {
-      onBadRequest();
+    if (response.status === HttpCode.BAD_REQUEST) {      
       throw err;
     }
 

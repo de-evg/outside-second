@@ -25,6 +25,7 @@ interface IPropsListItem {
   items: ITreeElement[]
 };
 
+// Элемент списка веток tree view - ветка tree view
 const ListItem: React.FC<IPropsListItem> = ({branchName, items}) => {
   const [isOpened, setOpened] = React.useState<boolean>(false);
   const [filteredItems, setFiltereditems] = React.useState<ITreeElement[] | []>([]);

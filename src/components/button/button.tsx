@@ -2,6 +2,8 @@ import * as React from "react";
 import styled from "styled-components";
 
 const Btn = styled.button``;
+
+//Реагирует на ошибку запроса
 const BtnError = styled(Btn)`
 
   animation: error 0.6s ease-in;

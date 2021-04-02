@@ -9,7 +9,7 @@ import App from './components/app/app';
 import { createAPI } from './api/api';
 import thunk from 'redux-thunk';
 
-const api = createAPI(() => { });
+const api = createAPI();
 
 const store = createStore(root, composeWithDevTools(applyMiddleware(thunk.withExtraArgument(api))));
 
